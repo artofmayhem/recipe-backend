@@ -145,19 +145,17 @@ const addRecipe = async (recipe) => {
 
     return getRecipes(rID)
 
+}
 
-
-    // await db('ingredients')
-    //     .insert({
-    //         ingredient_name: 
-    //     })
-    
-
-    // return await getRecipes(rID[0])
+const removeRecipe = async (recipe_id) => {
+    await db('recipes')
+        .where({ recipe_id })
+        .del()
 }
 
 
 module.exports = {
     getRecipes,
-    addRecipe
+    addRecipe,
+    removeRecipe
 }

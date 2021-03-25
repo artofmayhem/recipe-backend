@@ -35,4 +35,21 @@ router.post('/', async ( req, res, next) => {
     }
 })
 
+//UPDATE RECIPE
+
+//DELETE RECIPES
+
+router.delete('/:id', async ( req, res, next ) => {
+    try {
+        await recipes.removeRecipe(req.params.id)
+        res.status(200).json({
+            message: 'recipe successfully deleted'
+        })
+    } catch(err){
+        next(err)
+    }
+})
+
+
+
 module.exports = router

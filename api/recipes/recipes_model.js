@@ -2,7 +2,7 @@ const db = require('../data/db-config')
 
 
 //GET ALL RECIPES
-const getRecipes = async () => {
+const getRecipes = async (recipe_id) => {
 
     const results = await db({r: 'recipes'})
         .join({u: 'users'}, 'r.user_id', 'u.user_id') //join with user table to get the username of user who submitted recipe
@@ -11,6 +11,11 @@ const getRecipes = async () => {
         .join({ri: 'recipes_ingredients'}, 'r.recipe_id', 'ri.recipe_id') //join with 'recipes_ingredients' for corresponding ingredient ids and quantity
         .leftJoin({ig: 'ingredients'}, 'ri.ingredient_id', 'ig. ingredient_id') //join with 'ingredients' for ingredient name
         .leftJoin({in: 'instructions'}, 'r.recipe_id', 'in.recipe_id') //join with 'instructions' for instruction and step number
+        .modify(function(filterRecipes){
+            if(recipe_id){
+                filterRecipes.where('r.recipe_id',recipe_id)
+            }
+        }) //If recipe id given as parameter then filter recipes
         .select(
             'r.recipe_id',
             'r.recipe_name',

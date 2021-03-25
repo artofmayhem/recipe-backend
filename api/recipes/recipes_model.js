@@ -12,27 +12,50 @@ const getIngredients = (recipe_id) => {
             )
 }
 
+
+
 //Returns all recipes
 
 const getRecipes = async () => {
-    const recipes = await db({r: 'recipes'})
+    const results = await db({r: 'recipes'})
         .join({u: 'users'}, 'r.user_id', 'u.user_id')
         .join({i: 'images'}, 'r.image_id', 'i.image_id')
         .join({c: 'categories'}, 'r.category_id', 'c.category_id')
-        .select('*')
+        .join({ri: 'recipes_ingredients'}, 'r.recipe_id', 'ri.recipe_id')
+        .join({ig: 'ingredients'}, 'ri.ingredient_id', 'ig. ingredient_id')
+        .select(
+            'r.recipe_id',
+            'r.recipe_name',
+            'r.recipe_description',
+            'r.recipe_source',
+            'u.user_username',
+            'i.image_source',
+            'c.category_name',
+            'ig.ingredient_name',
+            'ri.quantity'
+            )
 
-    return recipes.map(recipe => {
-        return {
-            ...recipe,
-            ingredients: recipe.recipe_id
-        }
-    })
+        const newResults = results.reduce((acc, current) => {
+            let temp = acc.find( o => current.recipe_id === o.recipe_id)
+            if(!temp) {
+                acc.push(temp = {...current, ingredients: []})
+            }
+                temp.ingredients.push({
+                    ingredient_name: current.ingredient_name, 
+                    quantity: current.quantity
+                })
+                return acc
+            }, [])
+            
+    
+    return newResults
+
 }
 
 
 
 
-
 module.exports = {
-    getRecipes
+    getRecipes,
+    getIngredients
 }

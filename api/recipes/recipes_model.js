@@ -22,31 +22,41 @@ const getRecipes = async () => {
         .join({i: 'images'}, 'r.image_id', 'i.image_id')
         .join({c: 'categories'}, 'r.category_id', 'c.category_id')
         .join({ri: 'recipes_ingredients'}, 'r.recipe_id', 'ri.recipe_id')
-        .join({ig: 'ingredients'}, 'ri.ingredient_id', 'ig. ingredient_id')
+        .leftJoin({ig: 'ingredients'}, 'ri.ingredient_id', 'ig. ingredient_id')
+        // .join({in: 'instructions'}, 'r.recipe_id', 'in.recipe_id')
         .select(
             'r.recipe_id',
             'r.recipe_name',
             'r.recipe_description',
             'r.recipe_source',
-            'u.user_username',
+            'u.user_username as submitted_by',
             'i.image_source',
             'c.category_name',
             'ig.ingredient_name',
-            'ri.quantity'
+            'ri.quantity',
+            // 'in.instruction',
+            // 'in.step_number'
             )
 
-        const newResults = results.reduce((acc, current) => {
-            let temp = acc.find( o => current.recipe_id === o.recipe_id)
+        let newResults = results.reduce((acc, current) => {
+            
+            let temp = acc.find( recipe => recipe.recipe_id === current.recipe_id)
+
             if(!temp) {
                 acc.push(temp = {...current, ingredients: []})
-            }
+            } 
+            
+            else {
                 temp.ingredients.push({
-                    ingredient_name: current.ingredient_name, 
+                    ingredient: current.ingredient_name,
                     quantity: current.quantity
                 })
-                return acc
+            }
+   
+            return acc
             }, [])
-            
+        
+        newResults = newResults.map(({ingredient_name, quantity, ...rest }) => rest)
     
     return newResults
 

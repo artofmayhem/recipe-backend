@@ -7,4 +7,9 @@ server.use(express.json())
 server.use(helmet())
 server.use(cors())
 
+server.get('/', (req, res) => {
+    res.json({message: 'Welcome to Secret Family Recipes'})
+})
+
+
 module.exports = server

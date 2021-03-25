@@ -25,4 +25,14 @@ router.get('/:id', async ( req, res, next) => {
     }
 })
 
+//ADD RECIPE
+router.post('/', async ( req, res, next) => {
+    try {
+        const result = await recipes.addRecipe(req.body)
+        res.status(201).json(result)
+    } catch(err){
+        next(err)
+    }
+})
+
 module.exports = router

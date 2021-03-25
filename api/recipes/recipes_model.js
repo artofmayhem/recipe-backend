@@ -84,7 +84,80 @@ const getRecipes = async (recipe_id) => {
     return newResults
 }
 
+//ADD RECIPE
+
+const addRecipe = async (recipe) => {
+
+    //Add image and get image id
+    const [imageID] = await db('images')
+        .insert({
+            image_source: recipe.image_source
+        },'image_id')
+
+    //Add recipe and get recipe id
+    const [rID] = await db('recipes')
+        .insert({
+            recipe_name: recipe.recipe_name,
+            recipe_description: recipe.recipe_description,
+            recipe_source: recipe.recipe_source,
+            user_id: recipe.user_id,
+            image_id: imageID,
+            category_id: recipe.category_id
+        }, 'recipe_id')
+
+    //Add each ingredient to the ingredient table, then get id, and add to recipes_ingredients table with the corresponding quantity
+
+    const ingredients = recipe.ingredients
+
+    for (const ingredient of ingredients) {
+
+        //Check if ingredient exists in ingredient table 
+        
+        //Add ingredient and get ingredient_id
+        const [ingredientID] = await db('ingredients')
+            .insert({
+                ingredient_name: ingredient.ingredient_name
+            }, 'ingredient_id')
+
+        //Insert recipe, ingredient and quantity into recipes_ingredients junction table
+        await db('recipes_ingredients')
+            .insert({
+                recipe_id: rID,
+                ingredient_id: ingredientID,
+                quantity: ingredient.quantity
+            })
+      }
+
+    //Add each instruction to the instructions table
+    
+    const instructions = recipe.instructions
+
+    for (const instruction of instructions){
+
+        await db('instructions')
+            .insert({
+                instruction: instruction.instruction,
+                step_number: instruction.step_number,
+                recipe_id: rID
+            })
+
+    }
+
+    return getRecipes(rID)
+
+
+
+    // await db('ingredients')
+    //     .insert({
+    //         ingredient_name: 
+    //     })
+    
+
+    // return await getRecipes(rID[0])
+}
+
 
 module.exports = {
-    getRecipes
+    getRecipes,
+    addRecipe
 }

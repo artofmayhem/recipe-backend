@@ -32,9 +32,10 @@ const updatedRecipe = {
     "recipe_name": "Update Test",
     "recipe_description": "Real good beans with garlic",
     "recipe_source": "Nana",
+    "user_id": 1,
     "submitted_by": "jimbo",
     "image_source": "https://assets.bonappetit.com/photos/5c38c88f3a94835decfc5934/1:1/w_1600%2Cc_limit/crispy-fried-green-beans.jpg",
-    "category_name": "Breakfast",
+    "category_id": 1,
     "ingredients": [
         {
             "ingredient_name": "green beans",

@@ -78,9 +78,29 @@ describe('RECIPE TESTS', () => {
       expect(res.body[0].recipe_name)
         .toBe("Blistered Green Beans with Garlic")
       expect(res.body[0].ingredients.length).toBe(6)
+      expect(res.body.length).toBe(2)
     })
   })
 
+  describe('[GET] /api/recipes/:id', () => {
+    it('returns the correct recipes', async () => {
+      const res = await supertest(server)
+        .get('/api/recipes/1')
+      expect(res.statusCode).toBe(200)
+      expect(res.type).toBe('application/json')
+      expect(res.body.recipe_name)
+        .toBe("Blistered Green Beans with Garlic")
+      expect(res.body.ingredients.length).toBe(6)
+    })
+    it('provides proper error if id does not exist', async () => {
+      const res = await supertest(server)
+        .get('/api/recipes/100')
+      expect(res.statusCode).toBe(401)
+      expect(res.type).toBe('application/json')
+      expect(res.body.message).toBe('recipe does not exist')
+    })
+  })
+  
   describe('[POST] /api/recipes', () => {
     it('adds recipe correctly', async () => {
       const res = await supertest(server)
@@ -101,6 +121,34 @@ describe('RECIPE TESTS', () => {
       expect(res.type).toBe('application/json')
       expect(res.body.recipe_name).toBe('Update Test')
     })
+    it('provides proper error if recipe name missing', async () => {
+      const res = await supertest(server)
+        .put('/api/recipes/1')
+        .send({
+          ...data.updatedRecipe,
+          recipe_name: ''
+        })
+        expect(res.statusCode).toBe(400)
+        expect(res.body.message).toBe('missing recipe name')
+    })
+    it('provides proper error if recipe description missing', async () => {
+      const res = await supertest(server)
+        .put('/api/recipes/1')
+        .send({
+          ...data.updatedRecipe,
+          recipe_description: ''
+        })
+        expect(res.statusCode).toBe(400)
+        expect(res.body.message).toBe('missing recipe description')
+    })
+    it('provides proper error if id does not exist', async () => {
+      const res = await supertest(server)
+      .put('/api/recipes/100')
+      .send(data.updatedRecipe)
+      expect(res.statusCode).toBe(401)
+      expect(res.type).toBe('application/json')
+      expect(res.body.message).toBe('recipe does not exist')
+    })
   })
 
   describe('[DELETE] /api/recipes/:id', () => {
@@ -110,6 +158,13 @@ describe('RECIPE TESTS', () => {
       expect(res.statusCode).toBe(200)
       expect(res.type).toBe('application/json')
       expect(res.body.message).toBe('recipe successfully deleted')
+    })
+    it('provides proper error if id does not exist', async () => {
+      const res = await supertest(server)
+        .delete('/api/recipes/100')
+      expect(res.statusCode).toBe(401)
+      expect(res.type).toBe('application/json')
+      expect(res.body.message).toBe('recipe does not exist')
     })
   })
 

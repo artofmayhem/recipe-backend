@@ -81,7 +81,12 @@ const getRecipes = async (recipe_id) => {
             step_number, 
             ...rest }) => rest)
     
-    return newResults
+
+    if(recipe_id){
+        return newResults[0]
+    } else {
+        return newResults
+    }
 }
 
 //ADD RECIPE
@@ -142,7 +147,7 @@ const addRecipe = async (recipe) => {
             })
 
     }
-
+    
     return getRecipes(rID)
 
 }
@@ -151,7 +156,7 @@ const addRecipe = async (recipe) => {
 
 const updateRecipe = async (recipeID, change) => {
     //Get recipe by recipeID
-    const [originalRecipe] = await getRecipes(recipeID)
+    const originalRecipe = await getRecipes(recipeID)
 
     //Check if image has changed, if yes then update
     if(originalRecipe.image_source !== change.image_source){

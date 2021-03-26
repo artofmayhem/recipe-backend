@@ -279,8 +279,6 @@ const updateRecipe = async (recipeID, change) => {
         }
     }
 
-
-
     return getRecipes(recipeID)
 }
 

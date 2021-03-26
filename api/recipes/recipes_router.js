@@ -1,5 +1,6 @@
 const express = require('express')
 const recipes = require('./recipes_model')
+const { validateRecipe, validateRecipeID} = require('./recipes_middleware')
 
 const router = express.Router()
 
@@ -15,7 +16,7 @@ router.get('/', async ( req, res, next ) => {
 })
 
 //GET RECIPE BY ID
-router.get('/:id', async ( req, res, next) => {
+router.get('/:id', validateRecipeID, async ( req, res, next) => {
     try {
         const results = await recipes.getRecipes(req.params.id)
         res.status(200).json(results)
@@ -26,7 +27,7 @@ router.get('/:id', async ( req, res, next) => {
 })
 
 //ADD RECIPE
-router.post('/', async ( req, res, next) => {
+router.post('/', validateRecipe, async ( req, res, next) => {
     try {
         const result = await recipes.addRecipe(req.body)
         res.status(201).json(result)
@@ -37,7 +38,7 @@ router.post('/', async ( req, res, next) => {
 
 //UPDATE RECIPE
 
-router.put('/:id', async ( req, res, next ) => {
+router.put('/:id', validateRecipeID, validateRecipe, async ( req, res, next ) => {
     try  {
         const result = await recipes.updateRecipe(req.params.id, req.body)
         res.status(200).json(result)
@@ -48,7 +49,7 @@ router.put('/:id', async ( req, res, next ) => {
 
 //DELETE RECIPES
 
-router.delete('/:id', async ( req, res, next ) => {
+router.delete('/:id', validateRecipeID, async ( req, res, next ) => {
     try {
         await recipes.removeRecipe(req.params.id)
         res.status(200).json({

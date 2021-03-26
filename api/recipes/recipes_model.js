@@ -147,6 +147,111 @@ const addRecipe = async (recipe) => {
 
 }
 
+//UPDATE RECIPE
+
+const updateRecipe = async (recipeID, change) => {
+    //Get recipe by recipeID
+    const [originalRecipe] = await getRecipes(recipeID)
+
+    //Check if image has changed, if yes then update
+    if(originalRecipe.image_source !== change.image_source){
+        
+        const [imageID] = await db('images')
+            .insert({
+                image_source: change.image_source
+            }, 'image_id')
+
+        await db('recipes')
+            .where('recipe_id',recipeID)
+            .update({image_id: imageID})
+    }
+
+    //Update main recipe details if anything changed
+    await db('recipes')
+        .where('recipe_id', recipeID)
+        .update({
+            recipe_name: change.recipe_name,
+            recipe_description: change.recipe_description,
+            recipe_source: change.recipe_source,
+            user_id: change.user_id,
+            category_id: change.category_id
+        })
+
+    //For each ingredient in change check to see if exists in the original recipe
+
+    const newIngredients = change.ingredients
+    const originalIngredients = originalRecipe.ingredients
+
+    //Check to see if new ingredients in original recipe's ingredient list
+    for (const ingredient of newIngredients){
+        
+        let current = originalIngredients.find(o => o.ingredient === ingredient.ingredient_name)
+
+        //If it isn't in the list add ingredient, get the ingredient_id and add to recipes_ingredients
+        if(!current){
+            
+            const [ingredientID] = await db('ingredients')
+                .insert({
+                    ingredient_name: ingredient.ingredient_name
+                }, 'ingredient_id')
+
+            await db('recipes_ingredients')
+                .insert({
+                    recipe_id: recipeID,
+                    ingredient_id: ingredientID,
+                    quantity: ingredient.quantity
+                })
+        }
+        
+        //Otherwise, update the quantity of of ingredient with most recent
+        else {
+            const [result] = await db('ingredients')
+                .select('*')
+                .where('ingredient_name', ingredient.ingredient_name)
+            
+            await db('recipes_ingredients')
+                .where('recipe_id', recipeID)
+                .andWhere('ingredient_id', result.ingredient_id)
+                .update({ quantity: ingredient.quantity})
+        }
+    }
+
+    //Check to see if originalIngredients are in newIngredients, if not it means they've been deleted and should be removed from recipes_ingredients
+
+    for (const ing of originalIngredients){
+        let exists = newIngredients.find(n => n.ingredient_name === ing.ingredient)
+
+        if(!exists){
+            
+            const [result] = await db('ingredients')
+                .select('*')
+                .where('ingredient_name', ing.ingredient)
+            
+            await db('recipes_ingredients')
+                .where('recipe_id', recipeID)
+                .andWhere('ingredient_id', result.ingredient_id)
+                .del()
+        }
+    }
+
+
+    //Otherwise, get the ingredient id and update quantity in recipes_ingredients
+    // else {
+    //     const [ingredientID] = await db('ingredients')
+    //         .select('*')
+    //         .where('ingredient_name', ingredient.ingredient_name)
+
+    //     await db('recipes_ingredients')
+    //         .where('recipe_id',recipeID)
+    //         .andWhere('ingredient_id', ingredientID)
+    //         .update({quantity: ingredient.quantity})
+    // }
+
+    return getRecipes(recipeID)
+}
+
+//DELETE RECIPE
+
 const removeRecipe = async (recipe_id) => {
     await db('recipes')
         .where({ recipe_id })
@@ -157,5 +262,6 @@ const removeRecipe = async (recipe_id) => {
 module.exports = {
     getRecipes,
     addRecipe,
+    updateRecipe,
     removeRecipe
 }

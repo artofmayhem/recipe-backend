@@ -34,29 +34,35 @@
 ## Recipe Structure:
 ```
 {
-"recipe_name": "enter recipe name",  
-"recipe_description": "enter recipe description",
-"recipe_source": "enter recipe source",
-"user_id": 1,
-"image_source": "enter image url",
-"category_id": 2,
-"ingredients": [{
-"ingredient_name": "beef",
-"quantity": "not sure but it is a lot"
-}
-,{
-"ingredient_name": "tester three food",
-"quantity": "so much more"
-}],
-"instructions": [{
-"instruction": "mix it together",
-"step_number": 1
-},{
-"instruction": "mix it even more",
-"step_number": 2
-},{
-"instruction": "bake it please",
-"step_number": 3
-}]
+  "recipe_name": "enter recipe name",  
+  "recipe_description": "enter recipe description",
+  "recipe_source": "enter recipe source",
+  "user_id": 1,
+  "image_source": "enter image url",
+  "category_id": 2,
+  "ingredients": [
+    {
+      "ingredient_name": "beef",
+      "quantity": "not sure but it is a lot"
+    },
+    {
+      "ingredient_name": "tester three food",
+      "quantity": "so much more"
+    }
+  ],
+  "instructions": [
+    {
+      "instruction": "mix it together",
+      "step_number": 1
+    },
+    {
+      "instruction": "mix it even more",
+      "step_number": 2
+   },
+   {
+      "instruction": "bake it please",
+      "step_number": 3
+   }
+  ]
 }
 ```

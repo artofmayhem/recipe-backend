@@ -34,7 +34,7 @@
 ## Recipe Structure:
 `
 {
-"recipe_name": "enter recipe name",
+"recipe_name": "enter recipe name",  
 "recipe_description": "enter recipe description",
 "recipe_source": "enter recipe source",
 "user_id": 1,

@@ -234,18 +234,52 @@ const updateRecipe = async (recipeID, change) => {
         }
     }
 
+    //Check instructions
+    const originalInstructions = originalRecipe.instructions
+    const newInstructions = change.instructions
 
-    //Otherwise, get the ingredient id and update quantity in recipes_ingredients
-    // else {
-    //     const [ingredientID] = await db('ingredients')
-    //         .select('*')
-    //         .where('ingredient_name', ingredient.ingredient_name)
+    //check to see if new instruction is in original instructions, if not add it
 
-    //     await db('recipes_ingredients')
-    //         .where('recipe_id',recipeID)
-    //         .andWhere('ingredient_id', ingredientID)
-    //         .update({quantity: ingredient.quantity})
-    // }
+    for (const instruction of newInstructions){
+        let exists = originalInstructions.find(o => o.instruction === instruction.instruction)
+
+        //if doesn't exist create it
+        if(!exists){
+            await db('instructions')
+                .insert({
+                    instruction: instruction.instruction,
+                    step_number: instruction.step_number,
+                    recipe_id: recipeID
+                })
+        }
+
+        //if it does exist, update step_number
+        else {
+            const [result] = await db('instructions')
+                .select('*')
+                .where('instruction', instruction.instruction)
+
+            await db('instructions')
+                .where('instruction_id', result.instruction_id)
+                .update({
+                    step_number: instruction.step_number
+                })
+        }
+    }
+
+    //Check to see if originalInstructions are in newInstructions, if not it means they've been deleted and should be removed from instructions
+
+    for (const instruction of originalInstructions){
+        let exists = newInstructions.find(n => n.instruction === instruction.instruction)
+
+        if(!exists){
+            await db('instructions')
+                .where('instruction', instruction.instruction)
+                .del()
+        }
+    }
+
+
 
     return getRecipes(recipeID)
 }

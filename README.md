@@ -4,8 +4,8 @@
 
 ## RECIPE Endpoints
 
-[GET] ALL RECIPES: https://secret-family-recipes-101.herokuapp.com/api/recipes. 
-[GET] RECIPE BY ID: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id
+[GET] ALL RECIPES: https://secret-family-recipes-101.herokuapp.com/api/recipes   
+[GET] RECIPE BY ID: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id  
 [POST] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes
 [PUT] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id
 [DELETE] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id

@@ -10,7 +10,7 @@
 [PUT] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id  
 [DELETE] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id  
 
-## Categories:
+## Recipe Categories:
 
 1 = Breakfast  
 2 = Lunch  
@@ -32,7 +32,7 @@
 18 = Entertaining  
 
 ## Recipe Structure:
-
+`
 {
 "recipe_name": "enter recipe name",
 "recipe_description": "enter recipe description",
@@ -59,3 +59,4 @@
 "step_number": 3
 }]
 }
+`

@@ -6,30 +6,30 @@
 
 [GET] ALL RECIPES: https://secret-family-recipes-101.herokuapp.com/api/recipes   
 [GET] RECIPE BY ID: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id  
-[POST] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes
-[PUT] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id
-[DELETE] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id
+[POST] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes  
+[PUT] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id  
+[DELETE] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id  
 
 ## Categories:
 
-1 = Breakfast
-2 = Lunch
-3 = Beverages
-4 = Appetizers
-5 = Soups
-6 = Salads
-7 = Main dishes: Beef
-8 = Main dishes: Poultry
-9 = Main dishes: Pork
-10 = Main dishes: Seafood
-11 = Main dishes: Vegetarian
-12 = Side dishes: Vegetables
-13 = Side dishes: Other
-14 = Desserts
-15 = Canning / Freezing
-16 = Breads
-17 = Holidays
-18 = Entertaining
+1 = Breakfast  
+2 = Lunch  
+3 = Beverages  
+4 = Appetizers   
+5 = Soups  
+6 = Salads  
+7 = Main dishes: Beef  
+8 = Main dishes: Poultry  
+9 = Main dishes: Pork  
+10 = Main dishes: Seafood  
+11 = Main dishes: Vegetarian  
+12 = Side dishes: Vegetables  
+13 = Side dishes: Other  
+14 = Desserts  
+15 = Canning / Freezing  
+16 = Breads  
+17 = Holidays  
+18 = Entertaining  
 
 ## Recipe Structure:
 

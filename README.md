@@ -32,7 +32,7 @@
 18 = Entertaining  
 
 ## Recipe Structure:
-`
+```
 {
 "recipe_name": "enter recipe name",  
 "recipe_description": "enter recipe description",
@@ -59,4 +59,4 @@
 "step_number": 3
 }]
 }
-`
+```

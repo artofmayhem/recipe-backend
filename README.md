@@ -31,7 +31,7 @@
 17 = Holidays  
 18 = Entertaining  
 
-## Recipe Structure:
+## Recipe Schema:
 ```
 {
   "recipe_name": "enter recipe name",  

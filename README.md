@@ -2,6 +2,18 @@
 
 # Endpoints
 
+## USERS Endpoints
+
+[POST] REGISTER: https://secret-family-recipes-101.herokuapp.com/api/users/register  
+[POST] LOGIN: https://secret-family-recipes-101.herokuapp.com/api/users/login  
+
+## User Requirements:
+
+Register = user_username, user_email, user_password
+    ** user_username & user_email must be unique **
+
+Login = user_username, user_password
+
 ## RECIPE Endpoints
 
 [GET] ALL RECIPES: https://secret-family-recipes-101.herokuapp.com/api/recipes   

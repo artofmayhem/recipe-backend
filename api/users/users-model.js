@@ -6,19 +6,21 @@ function find() {
 
 function findBy(filter) {
   return db("users")
-    .select("user_id", "username", "email", "password")
+    .select("user_id", "user_username", "user_email", "user_password")
     .where(filter)
 }
 
 function findById(user_id) {
   return db("users")
-		.select("user_id", "username")
+		.select("user_id", "user_username", "user_email")
 		.where({ user_id })
 		.first()
 }
 
 async function add(user) {
-  const [id] = await db("users").insert(user)
+  // console.log(user)
+  const [id] = await db("users").insert(user).returning("user_id")
+  console.log(id) 
 	return findById(id)
 }
 

@@ -33,23 +33,23 @@ describe('server.js', () => {
 //       const res = await supertest(server)
 //         .post('/api/users/register')
 //         .send({
-//           username: 'jimbo',
-//           email: 'jimbo@slice.com',
-//           password: 'slice'
+//           user_username: 'jimbo',
+//           user_email: 'jimbo@slice.com',
+//           user_password: 'slice'
 //         })
 //       expect(res.statusCode).toBe(201)
 //       expect(res.type).toBe("application/json")
-//       expect(res.body.id).toBeDefined()
-//       expect(res.body.username).toBe('jimbo')
+//       expect(res.body.user_id).toBeDefined()
+//       expect(res.body.user_username).toBe('jimbo')
 //     })
 
 //     it('gives correct error if registrations details invalid', async () => {
 //       const res = await supertest(server)
 //         .post('/api/users/register')
 //         .send({
-//           username: '',
-//           email: '',
-//           password: 'hi there'
+//           user_username: '',
+//           user_email: '',
+//           user_password: 'hi there'
 //         })
 //         expect(res.statusCode).toBe(404)
 //         expect(res.body.message).toBe('username, email, and password required')
@@ -60,7 +60,7 @@ describe('server.js', () => {
 //       const res = await supertest(server)
 //         .get('/api/users/1')
 //       expect(res.statusCode).toBe(200)
-//       expect(res.body.username).toBe()
+//       expect(res.body.user_username).toBe()
 //         })
 //     })
 // })

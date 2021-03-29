@@ -5,11 +5,14 @@ const recipesRouter = require('./recipes/recipes_router')
 const usersRouter = require('./users/users-router')
 
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 
 const server = express()
 server.use(express.json())
 server.use(helmet())
 server.use(cors())
+
+server.use(cookieParser())
 
 server.get('/', (req, res) => {
     res.json({message: 'Welcome to Secret Family Recipes'})

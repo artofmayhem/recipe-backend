@@ -25,24 +25,44 @@ describe('server.js', () => {
   })
 })
 
+const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3VzZXJuYW1lIjoiamltYm8iLCJpYXQiOjE2MTcwMzc2Mzh9.nhYSAG8vN9P3BVKs3H1_z_ul97idTz1fo7c4P3vFg98"
 
-// describe("user endpoint tests", () => {
-//   describe('[POST] /api/users/register', () => {
+
+describe("user endpoint tests", () => {
+  describe('[POST] /api/users/register', () => {
     
-//     it('creates a new user', async () => {
-//       const res = await supertest(server)
-//         .post('/api/users/register')
-//         .send({
-//           user_username: 'jimbo',
-//           user_email: 'jimbo@slice.com',
-//           user_password: 'slice'
-//         })
-//       expect(res.statusCode).toBe(201)
-//       expect(res.type).toBe("application/json")
-//       expect(res.body.user_id).toBeDefined()
-//       expect(res.body.user_username).toBe('jimbo')
-//     })
+    it('creates a new user', async () => {
+      const res = await supertest(server)
+        .post('/api/users/register')
+        .send({
+          user_username: 'kimbo',
+          user_email: 'kimbo@slice.com',
+          user_password: 'slice'
+        })
+      expect(res.statusCode).toBe(201)
+      expect(res.type).toBe("application/json")
+      expect(res.body.user_id).toBeDefined()
+      expect(res.body.user_username).toBe('kimbo')
+    })
+  })
 
+  describe('[POST] /api/users/login', () => {
+    
+    it('logs in user', async () => {
+      const res = await supertest(server)
+        .post('/api/users/login')
+        .set('authorization', authToken)
+        .send({
+          user_username: 'jimbo',
+          user_email: 'jimbo@slice.com',
+          user_password: 'abc1234'
+        })
+      expect(res.statusCode).toBe(200)
+      expect(res.type).toBe("application/json")
+      expect(res.body.message).toBe(`jimbo is back!`)
+    })
+  })
+})
 //     it('gives correct error if registrations details invalid', async () => {
 //       const res = await supertest(server)
 //         .post('/api/users/register')
@@ -73,6 +93,7 @@ describe('RECIPE TESTS', () => {
     it('returns the correct recipes', async () => {
       const res = await supertest(server)
         .get('/api/recipes')
+        .set('authorization', authToken)
       expect(res.statusCode).toBe(200)
       expect(res.type).toBe('application/json')
       expect(res.body[0].recipe_name)
@@ -86,6 +107,7 @@ describe('RECIPE TESTS', () => {
     it('returns the correct recipes', async () => {
       const res = await supertest(server)
         .get('/api/recipes/1')
+        .set('authorization', authToken)
       expect(res.statusCode).toBe(200)
       expect(res.type).toBe('application/json')
       expect(res.body.recipe_name)
@@ -95,6 +117,7 @@ describe('RECIPE TESTS', () => {
     it('provides proper error if id does not exist', async () => {
       const res = await supertest(server)
         .get('/api/recipes/100')
+        .set('authorization', authToken)
       expect(res.statusCode).toBe(401)
       expect(res.type).toBe('application/json')
       expect(res.body.message).toBe('recipe does not exist')
@@ -105,6 +128,7 @@ describe('RECIPE TESTS', () => {
     it('adds recipe correctly', async () => {
       const res = await supertest(server)
         .post('/api/recipes')
+        .set('authorization', authToken)
         .send(data.newRecipe)
       expect(res.statusCode).toBe(201)
       expect(res.type).toBe('application/json')
@@ -116,6 +140,7 @@ describe('RECIPE TESTS', () => {
     it('updates recipe correctly', async () => {
       const res = await supertest(server)
         .put('/api/recipes/1')
+        .set('authorization', authToken)
         .send(data.updatedRecipe)
       expect(res.statusCode).toBe(200)
       expect(res.type).toBe('application/json')
@@ -124,6 +149,7 @@ describe('RECIPE TESTS', () => {
     it('provides proper error if recipe name missing', async () => {
       const res = await supertest(server)
         .put('/api/recipes/1')
+        .set('authorization', authToken)
         .send({
           ...data.updatedRecipe,
           recipe_name: ''
@@ -134,6 +160,7 @@ describe('RECIPE TESTS', () => {
     it('provides proper error if recipe description missing', async () => {
       const res = await supertest(server)
         .put('/api/recipes/1')
+        .set('authorization', authToken)
         .send({
           ...data.updatedRecipe,
           recipe_description: ''
@@ -144,6 +171,7 @@ describe('RECIPE TESTS', () => {
     it('provides proper error if id does not exist', async () => {
       const res = await supertest(server)
       .put('/api/recipes/100')
+      .set('authorization', authToken)
       .send(data.updatedRecipe)
       expect(res.statusCode).toBe(401)
       expect(res.type).toBe('application/json')
@@ -155,6 +183,7 @@ describe('RECIPE TESTS', () => {
     it('updates recipe correctly', async () => {
       const res = await supertest(server)
         .delete('/api/recipes/1')
+        .set('authorization', authToken)
       expect(res.statusCode).toBe(200)
       expect(res.type).toBe('application/json')
       expect(res.body.message).toBe('recipe successfully deleted')
@@ -162,6 +191,7 @@ describe('RECIPE TESTS', () => {
     it('provides proper error if id does not exist', async () => {
       const res = await supertest(server)
         .delete('/api/recipes/100')
+        .set('authorization', authToken)
       expect(res.statusCode).toBe(401)
       expect(res.type).toBe('application/json')
       expect(res.body.message).toBe('recipe does not exist')

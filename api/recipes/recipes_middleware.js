@@ -55,6 +55,10 @@ const validateRecipeID = async ( req, res, next) => {
                 message: 'recipe does not exist'
             })
         }
+
+        //pass the username to the next 
+        req.user_name = result.submitted_by
+
         next()
 
     } catch(err){
@@ -62,7 +66,24 @@ const validateRecipeID = async ( req, res, next) => {
     }
 }
 
+const restrictEditing = async ( req, res, next ) => {
+    try {
+        //if the current user_username from token does not equal reicpe_userID restrict
+        if(req.token.user_username !== req.user_name){
+            return res.status(401).json({
+                message: 'you do not have permission to edit this recipe'
+            })
+        }
+
+        next()
+
+    } catch(err) {
+        next(err)
+    }
+}
+
 module.exports = {
     validateRecipe,
-    validateRecipeID
+    validateRecipeID,
+    restrictEditing
 }

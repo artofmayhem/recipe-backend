@@ -1,6 +1,6 @@
 const express = require('express')
 const recipes = require('./recipes_model')
-const { validateRecipe, validateRecipeID} = require('./recipes_middleware')
+const { validateRecipe, validateRecipeID, restrictEditing } = require('./recipes_middleware')
 
 const router = express.Router()
 
@@ -38,7 +38,7 @@ router.post('/', validateRecipe, async ( req, res, next) => {
 
 //UPDATE RECIPE
 
-router.put('/:id', validateRecipeID, validateRecipe, async ( req, res, next ) => {
+router.put('/:id', validateRecipeID, restrictEditing, validateRecipe, async ( req, res, next ) => {
     try  {
         const result = await recipes.updateRecipe(req.params.id, req.body)
         res.status(200).json(result)
@@ -49,7 +49,7 @@ router.put('/:id', validateRecipeID, validateRecipe, async ( req, res, next ) =>
 
 //DELETE RECIPES
 
-router.delete('/:id', validateRecipeID, async ( req, res, next ) => {
+router.delete('/:id', validateRecipeID, restrictEditing, async ( req, res, next ) => {
     try {
         await recipes.removeRecipe(req.params.id)
         res.status(200).json({

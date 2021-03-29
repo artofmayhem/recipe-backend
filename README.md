@@ -24,9 +24,9 @@ Login = user_username, user_password
 
 ## MY-LIST Endpoints
 
-[GET] MyList: https://secret-famiily-recipes-101.herokuapp.com/api/recipes/my-list
-[POST] Recipe to MyList: https://secret-famiily-recipes-101.herokuapp.com/api/recipes/my-list/:id         //ID = recipe_id
-[DELETE] Recipe from MyList: https://secret-famiily-recipes-101.herokuapp.com/api/recipes/my-list/:id     //ID = recipe_id
+[GET] MyList: https://secret-famiily-recipes-101.herokuapp.com/api/recipes/my-list  
+[POST] Recipe to MyList: https://secret-famiily-recipes-101.herokuapp.com/api/recipes/my-list/:id  
+[DELETE] Recipe from MyList: https://secret-famiily-recipes-101.herokuapp.com/api/recipes/my-list/:id  
 
 ## Recipe Categories:
 

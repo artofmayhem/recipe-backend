@@ -53,7 +53,6 @@ const checkUsernameExists = async (req, res, next) => {
 
 
 module.exports = {
-  // restricted,
   checkEmailUnique,
   checkUsernameFree,
   checkUsernameExists,

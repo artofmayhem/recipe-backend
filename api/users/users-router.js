@@ -52,7 +52,7 @@ router.post("/login", checkUsernameExists, async (req, res, next) => {
       user_username: user[0].user_username
     }, JWT_SECRET)
 
-    res.cookie("token", token)
+    
     res.status(200).json({
     message: `${user[0].user_username} is back!`,
     token: token,

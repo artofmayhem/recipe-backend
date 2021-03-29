@@ -15,8 +15,43 @@ router.get('/', async ( req, res, next ) => {
     }
 })
 
+//GET MyList
+
+router.get('/my-list', async (req, res, next ) => {
+    try {
+        const result = await recipes.getMyList(req.token.user_id)
+        res.status(200).json(result)
+    } catch(err){
+        next(err)
+    }
+})
+
+
+//[POST] Recipe to MYLIST
+router.post('/my-list/:id', validateRecipeID, async ( req, res, next ) => {
+    try {
+        const result = await recipes.addToMyList(req.token.user_id, req.params.id)
+        res.status(201).json(result)
+    } catch(err){
+        next(err)
+    }
+})
+
+//REMOVE recipe from myList
+
+router.delete('/my-list/:id', validateRecipeID, async ( req, res, next ) => {
+    try {
+        const result = await recipes.removeFromMyList(req.token.user_id, req.params.id)
+        res.status(200).json(result)
+
+    } catch(err){
+        next(err)
+    }
+})
+
+
 //GET RECIPE BY ID
-router.get('/:id', validateRecipeID, async ( req, res, next) => {
+router.get('/:id/', validateRecipeID, async ( req, res, next) => {
     try {
         const results = await recipes.getRecipes(req.params.id)
         res.status(200).json(results)
@@ -38,7 +73,7 @@ router.post('/', validateRecipe, async ( req, res, next) => {
 
 //UPDATE RECIPE
 
-router.put('/:id', validateRecipeID, restrictEditing, validateRecipe, async ( req, res, next ) => {
+router.put('/:id/', validateRecipeID, restrictEditing, validateRecipe, async ( req, res, next ) => {
     try  {
         const result = await recipes.updateRecipe(req.params.id, req.body)
         res.status(200).json(result)
@@ -49,7 +84,7 @@ router.put('/:id', validateRecipeID, restrictEditing, validateRecipe, async ( re
 
 //DELETE RECIPES
 
-router.delete('/:id', validateRecipeID, restrictEditing, async ( req, res, next ) => {
+router.delete('/:id/', validateRecipeID, restrictEditing, async ( req, res, next ) => {
     try {
         await recipes.removeRecipe(req.params.id)
         res.status(200).json({

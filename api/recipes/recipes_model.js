@@ -297,10 +297,53 @@ const removeRecipe = async (recipe_id) => {
         .del()
 }
 
+//ADD RECIPE TO MyList
+
+const getMyList = async (userID) => {
+    
+    //Get the ids of recipes in the users list
+    const results = await db('users_recipes')
+        .where('user_id', userID)
+        .select('*')
+
+    let myList = []
+
+    for (const recipe of results){
+        const result = await getRecipes(recipe.recipe_id)
+        myList.push(result)
+    }
+
+    return myList
+
+}
+
+const addToMyList = async (userID, recipeID) => {
+
+    await db('users_recipes')
+        .insert({
+            user_id: userID,
+            recipe_id: recipeID
+        })
+    
+    return 'added to list'
+}
+
+const removeFromMyList = async (userID, recipeID) => {
+    await db('users_recipes')
+        .where('user_id', userID)
+        .andWhere('recipe_id', recipeID)
+        .del()
+    
+    return 'recipe remove from list'
+}
+
 
 module.exports = {
     getRecipes,
     addRecipe,
     updateRecipe,
-    removeRecipe
+    removeRecipe,
+    getMyList,
+    addToMyList,
+    removeFromMyList
 }

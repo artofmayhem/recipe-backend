@@ -22,6 +22,12 @@ Login = user_username, user_password
 [PUT] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id  
 [DELETE] RECIPE: https://secret-family-recipes-101.herokuapp.com/api/recipes/:id  
 
+## MY-LIST Endpoints
+
+[GET] MyList: https://secret-famiily-recipes-101.herokuapp.com/api/recipes/my-list
+[POST] Recipe to MyList: https://secret-famiily-recipes-101.herokuapp.com/api/recipes/my-list/:id         //ID = recipe_id
+[DELETE] Recipe from MyList: https://secret-famiily-recipes-101.herokuapp.com/api/recipes/my-list/:id     //ID = recipe_id
+
 ## Recipe Categories:
 
 1 = Breakfast  

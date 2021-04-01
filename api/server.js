@@ -12,8 +12,11 @@ const server = express()
 server.use(express.json())
 server.use(helmet())
 
-server.use(cors())
-server.options('*', cors())
+server.use(cors({ 
+	credentials: true, 
+	allowedHeaders: ['Content-Type', 'Authroization', 'authorization'
+]
+}))
 
 
 server.use(cookieParser())

@@ -13,7 +13,7 @@ server.use(express.json())
 server.use(helmet())
 
 server.use(cors({ 
-	origin: true,
+	origin: '*',
 	methods: ['GET', 'PUT', 'POST', 'DELETE']
 }))
 
@@ -21,7 +21,6 @@ server.options('*', cors())
 
 
 // server.use(cookieParser())
-
 server.get('/', (req, res) => {
     res.json({message: 'Welcome to Secret Family Recipes'})
 })

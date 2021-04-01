@@ -21,6 +21,7 @@ const getRecipes = async (recipe_id) => {
             'r.recipe_name',
             'r.recipe_description',
             'r.recipe_source',
+            'u.user_id',
             'u.user_username as submitted_by',
             'i.image_source',
             'c.category_name',

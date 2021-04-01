@@ -14,7 +14,7 @@ server.use(helmet())
 
 server.use(cors({ 
 	credentials: true, 
-	allowedHeaders: ['Content-Type', 'Authroization', 'authorization'
+	allowedHeaders: ['Content-Type', 'Authorization', 'authorization'
 ]
 }))
 

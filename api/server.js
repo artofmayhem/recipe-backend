@@ -11,7 +11,19 @@ const cookieParser = require('cookie-parser')
 const server = express()
 server.use(express.json())
 server.use(helmet())
-server.use(cors({origin: '*'}))
+const whitelist = ['http://localhost:3000', 'http://localhost:5000', 'https://secret-family-recipes-101.herokuapp.com/']
+var corsOptions = {
+	origin: function (origin, callback) {
+		if (whitelist.indexOf(origin) !== -1) {
+		callback(null, true)
+		} 
+		else {
+		callback(new Error('Not allowed by CORS'))
+		}
+	}
+  }
+
+server.use(cors(corsOptions))
 
 
 server.use(cookieParser())

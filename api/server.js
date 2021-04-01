@@ -12,11 +12,7 @@ const server = express()
 server.use(express.json())
 server.use(helmet())
 
-server.use(cors({ 
-	credentials: true, 
-	allowedHeaders: ['Content-Type', 'Authorization', 'authorization'
-]
-}))
+server.use(cors({ origin: 'https://secret-family-recipes-101.herokuapp.com/'}))
 
 
 // server.use(cookieParser())

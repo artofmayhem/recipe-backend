@@ -13,9 +13,11 @@ server.use(express.json())
 server.use(helmet())
 
 server.use(cors({ 
-	origin: ['https://secret-family-recipes-101.herokuapp.com/', 'http://localhost:3000'],
+	origin: true,
 	methods: ['GET', 'PUT', 'POST', 'DELETE']
 }))
+
+server.options('*', cors())
 
 
 // server.use(cookieParser())

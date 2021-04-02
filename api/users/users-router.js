@@ -58,6 +58,8 @@ router.post("/login", checkUsernameExists, async (req, res, next) => {
     res.status(200).json({
     message: `${user[0].user_username} is back!`,
     token: token,
+    user_id: user[0].user_id,
+    user_username: user[0].user_username
   })
   } catch (err) {
     next(err)
